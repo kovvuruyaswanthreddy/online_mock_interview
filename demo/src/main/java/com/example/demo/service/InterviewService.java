@@ -21,6 +21,10 @@ public class InterviewService {
 
     public Interview startInterview(Interview interview) {
 
+        if (interview.getUserId() == null) {
+            return null;
+        }
+
         User user = userRepository
                 .findById(interview.getUserId())
                 .orElse(null);
@@ -47,5 +51,22 @@ public class InterviewService {
             return interviewRepository
                     .findById(interviewId)
                     .orElse(null);
+    }
+
+    public Interview completeInterview(Long interviewId) {
+
+        Interview interview =
+                interviewRepository
+                        .findById(interviewId)
+                        .orElse(null);
+
+        if (interview == null) {
+            return null;
+        }
+
+        interview.setStatus("COMPLETED");
+
+        return interviewRepository.save(
+                interview);
     }
 }

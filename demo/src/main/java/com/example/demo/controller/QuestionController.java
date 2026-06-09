@@ -10,6 +10,7 @@ import com.example.demo.dto.QuestionResponseDto;
 import com.example.demo.entity.Interview;
 import com.example.demo.service.GeminiService;
 import com.example.demo.service.InterviewService;
+import com.example.demo.service.QuestionService;
 
 @RestController
 @RequestMapping("/interview")
@@ -20,6 +21,9 @@ public class QuestionController {
 
     @Autowired
     private GeminiService geminiService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @PostMapping("/question")
     public Object generateQuestion(
@@ -32,9 +36,11 @@ public class QuestionController {
         if (interview == null) {
             return "Interview not found";
         }
-        if (LocalDateTime.now().isAfter(interview.getEndTime())) {
+        if (interview.getEndTime() != null &&
+                    LocalDateTime.now().isAfter(
+                            interview.getEndTime())) {
 
-            return "Interview Completed";
+                return "Interview Completed";
         }
 
         String question =
@@ -42,6 +48,11 @@ public class QuestionController {
                                 interview.getInterviewType(),
                                 interview.getDomain(),
                                 interview.getLevel());
+
+        questionService.saveQuestion(
+                                        interview.getId(),
+                                        dto.getQuestionNumber(),
+                                        question);
 
         QuestionResponseDto response =
                 new QuestionResponseDto();

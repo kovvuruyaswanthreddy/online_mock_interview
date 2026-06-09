@@ -4,6 +4,7 @@ public class GenerateQuestionDto {
 
     private Long interviewId;
 
+    private Integer questionNumber;
     public GenerateQuestionDto() {
     }
 
@@ -13,5 +14,12 @@ public class GenerateQuestionDto {
 
     public void setInterviewId(Long interviewId) {
         this.interviewId = interviewId;
+    }
+    public Integer getQuestionNumber() {
+        return questionNumber;
+    }
+
+    public void setQuestionNumber(Integer questionNumber) {
+        this.questionNumber = questionNumber;
     }
 }

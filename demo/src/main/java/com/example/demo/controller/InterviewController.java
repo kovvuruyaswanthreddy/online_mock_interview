@@ -27,6 +27,8 @@ public class InterviewController {
         interview.setLevel(startInterviewDto.getLevel());
         interview.setDuration(startInterviewDto.getDuration());
 
+        System.out.println("UserId = " +startInterviewDto.getUserId());
+
         Interview savedInterview =
                 interviewService.startInterview(interview);
 
@@ -41,5 +43,20 @@ public class InterviewController {
         response.setStatus(savedInterview.getStatus());
 
         return response;
+    }
+
+    @PostMapping("/complete/{interviewId}")
+    public Object completeInterview( @PathVariable Long interviewId) {
+
+        Interview interview =
+                interviewService
+                        .completeInterview(
+                                interviewId);
+
+        if (interview == null) {
+            return "Interview not found";
+        }
+
+        return "Interview Completed Successfully";
     }
 }
