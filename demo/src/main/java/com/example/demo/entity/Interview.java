@@ -26,6 +26,8 @@ public class Interview {
 
     private Double overallScore;
 
+    private String level;
+
     @Column(columnDefinition = "TEXT")
     private String evaluationReport;
 
@@ -123,4 +125,13 @@ public class Interview {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+    
 }

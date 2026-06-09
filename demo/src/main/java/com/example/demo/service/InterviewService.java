@@ -29,7 +29,14 @@ public class InterviewService {
             return null;
         }
 
-        interview.setStartTime(LocalDateTime.now());
+        LocalDateTime startTime = LocalDateTime.now();
+
+        interview.setStartTime(startTime);
+
+        interview.setEndTime(
+                startTime.plusMinutes(
+                        interview.getDuration()));
+
         interview.setStatus("IN_PROGRESS");
 
         return interviewRepository.save(interview);

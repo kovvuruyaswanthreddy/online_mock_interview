@@ -6,6 +6,7 @@ public class StartInterviewDto {
     private String interviewType;
     private String domain;
     private Integer duration;
+    private String level;
 
     public StartInterviewDto() {
     }
@@ -40,5 +41,13 @@ public class StartInterviewDto {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,11 +32,16 @@ public class QuestionController {
         if (interview == null) {
             return "Interview not found";
         }
+        if (LocalDateTime.now().isAfter(interview.getEndTime())) {
+
+            return "Interview Completed";
+        }
 
         String question =
                 geminiService.generateQuestion(
-                        interview.getInterviewType(),
-                        interview.getDomain());
+                                interview.getInterviewType(),
+                                interview.getDomain(),
+                                interview.getLevel());
 
         QuestionResponseDto response =
                 new QuestionResponseDto();

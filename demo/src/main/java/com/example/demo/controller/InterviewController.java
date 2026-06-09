@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.StartInterviewDto;
+import com.example.demo.dto.StartInterviewResponseDto;
 import com.example.demo.entity.Interview;
 import com.example.demo.service.InterviewService;
 
@@ -15,7 +16,7 @@ public class InterviewController {
     private InterviewService interviewService;
 
     @PostMapping("/start")
-    public String startInterview(
+    public Object startInterview(
             @RequestBody StartInterviewDto startInterviewDto) {
 
         Interview interview = new Interview();
@@ -23,6 +24,7 @@ public class InterviewController {
         interview.setUserId(startInterviewDto.getUserId());
         interview.setInterviewType(startInterviewDto.getInterviewType());
         interview.setDomain(startInterviewDto.getDomain());
+        interview.setLevel(startInterviewDto.getLevel());
         interview.setDuration(startInterviewDto.getDuration());
 
         Interview savedInterview =
@@ -32,6 +34,12 @@ public class InterviewController {
             return "User not found";
         }
 
-        return "Interview started successfully";
+        StartInterviewResponseDto response =
+                new StartInterviewResponseDto();
+
+        response.setInterviewId(savedInterview.getId());
+        response.setStatus(savedInterview.getStatus());
+
+        return response;
     }
 }
